@@ -45,7 +45,7 @@ export default function HomeBanners() {
     >
       {bannerList.results.map((item, index) => (
         <div key={index} className="carousel-slide">
-          <img 
+          <Image 
             src={item.image} 
             alt={item.title || `Banner ${index + 1}`}
             className="carousel-image"
