@@ -1,33 +1,65 @@
-import Link from "next/link";
-export default function HomeServices() {
-    return (
-        <div className=" row grid text-center" >
-            <h1 className="mb-3">Services</h1>
-            <div className="col-4">
-                <img src="https://placehold.co/600x400" className="card-img-top" alt="..." />
-                <div className="card-body">
-                    <h5 className="card-title">Room Type</h5>
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                    <Link href="/room_type" className="btn btn-primary">View More</Link>
-                </div>
-            </div>
-            <div className="col-4">
-                <img src="https://placehold.co/600x400" className="card-img-top" alt="..." />
-                <div className="card-body">
-                    <h5 className="card-title">Events</h5>
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div className="col-4">
-                <img src="https://placehold.co/600x400" className="card-img-top" alt="..." />
-                <div className="card-body">
-                    <h5 className="card-title">Online Booking</h5>
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                    <a href="#" className="btn btn-primary">Go somewhere</a>
+import React from 'react';
 
-                </div>
+const ServiceCard = ({ icon, title, description }) => {
+    return (
+        <div className="container service-card">
+            <div className="icon-container">
+                <img src={icon} alt={title} className="service-icon" />
+            </div>
+            <h3 className="service-title">{title}</h3>
+            <p className="service-description">{description}</p>
+        </div>
+    );
+};
+
+const ServicesGrid = () => {
+    const services = [
+        {
+            title: "Restaurant",
+            icon: "/images/icons/balcony.png",
+            description: "Do dolore laboris commodo amet cillum qui voluptate velit occaecat adipisicing laboris est minim."
+        },
+        {
+            title: "Spa & Massage",
+            icon: "/images/icons/bed.png",
+            description: "Do dolore laboris commodo amet cillum qui voluptate velit occaecat adipisicing laboris est minim."
+        },
+        {
+            title: "Swimming Pool",
+            icon: "/images/icons/shower.png",
+            description: "Do dolore laboris commodo amet cillum qui voluptate velit occaecat adipisicing laboris est minim."
+        },
+        {
+            title: "Meeting Room",
+            icon: "/images/icons/desk.png",
+            description: "Do dolore laboris commodo amet cillum qui voluptate velit occaecat adipisicing laboris est minim."
+        },
+        {
+            title: "Fitness Center",
+            icon: "/images/icons/city.png",
+            description: "Do dolore laboris commodo amet cillum qui voluptate velit occaecat adipisicing laboris est minim."
+        },
+        {
+            title: "Laundry Service",
+            icon: "/images/icons/guests.png",
+            description: "Do dolore laboris commodo amet cillum qui voluptate velit occaecat adipisicing laboris est minim."
+        }
+    ];
+
+    return (
+        <div className="services-container">
+            <div className="services-grid">
+                {services.map((service, index) => (
+                    <ServiceCard
+                        key={index}
+                        icon={service.icon}
+                        title={service.title}
+                        description={service.description}
+                    />
+                ))}
             </div>
         </div>
     );
-}
+};
+
+export default ServicesGrid;

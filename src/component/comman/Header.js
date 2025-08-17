@@ -1,10 +1,12 @@
 'use client'
 import Link from "next/link";
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 
 export default function Header() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
         // This runs only on client side after component mounts
@@ -17,12 +19,24 @@ export default function Header() {
             }
         }
         setLoading(false);
+
+        // Handle scroll effect
+        const handleScroll = () => {
+            if (window.scrollY > 10) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     if (loading) {
         return <div className="navbar-placeholder" style={{ height: '56px' }}></div>;
     }
-
+    // Conflicting
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme='dark' style={{ backgroundColor: '#550059' }}>
             <div className="container">
@@ -52,6 +66,11 @@ export default function Header() {
                                 <Link className="btn btn-dark btn-sm mt-2" href="/user/signup">Sign Up</Link>
                             </li>
                         )}
+                        {
+                            user && user.mobile != '' && <li className="nav-item m-2">
+                                <Link className="nav-link" href="/user/dashboard">Dashboard</Link>
+                            </li>
+                        }
                         {user?.mobile && (
                             <>
                                 <li className="nav-item m-2">

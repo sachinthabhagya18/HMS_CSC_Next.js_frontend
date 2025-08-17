@@ -1,6 +1,7 @@
 # .gitignore
 node_modules/
 .next/
+public/images/
 .env
 .DS_Store
 *.log

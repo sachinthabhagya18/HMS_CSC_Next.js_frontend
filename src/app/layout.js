@@ -2,8 +2,9 @@
 import Header from "@/component/comman/Header";
 import Bottom from "@/component/comman/Bottom";
 import Footer from "@/component/comman/Footer";
-import "./globals.css";
+
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./globals.css";
 
 
 
@@ -19,7 +20,7 @@ export default function RootLayout({ children }) {
       <body cz-shortcut-listen="true">
         <Header />
         {children}
-        <Footer/>
+        <Footer />
         <Bottom />
       </body>
     </html>

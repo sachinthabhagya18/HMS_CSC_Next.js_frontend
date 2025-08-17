@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-export default function Footer(){
-    return(
-    <footer className="bg-dark text-white pt-5 pb-4">
+export default function Footer() {
+  return (
+    <footer className="bg-dark text-white pt-5 pb-4 ">
       <div className="container">
         <div className="row">
           {/* Company Info */}
@@ -92,5 +92,5 @@ export default function Footer(){
         </div>
       </div>
     </footer>
-    );
+  );
 }
