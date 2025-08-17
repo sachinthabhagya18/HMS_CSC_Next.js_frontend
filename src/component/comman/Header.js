@@ -66,6 +66,11 @@ export default function Header() {
                                 <Link className="btn btn-dark btn-sm mt-2" href="/user/signup">Sign Up</Link>
                             </li>
                         )}
+                        {
+                            user && user.mobile != '' && <li className="nav-item m-2">
+                                <Link className="nav-link" href="/user/dashboard">Dashboard</Link>
+                            </li>
+                        }
                         {user?.mobile && (
                             <>
                                 <li className="nav-item m-2">

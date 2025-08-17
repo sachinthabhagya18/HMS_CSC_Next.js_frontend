@@ -1,12 +1,26 @@
 'use client';
 // import '../globals.css';
 import Link from 'next/link';
-import { useState, useEffect, use, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function BookingForm({ roomDetail, rooms }) {
 
     const roomList = rooms.results;
     const user = JSON.parse(localStorage.getItem('user'));
+
+    // useEffect(() => {
+    //     // This runs only in the browser
+
+
+    //     if (user) {
+    //         try {
+    //             setUser(user);
+
+    //         } catch (error) {
+    //             console.error('Error parsing user data:', error);
+    //         }
+    //     }
+    // }, []);
 
     const [TotalCost, setTotalCost] = useState(0);
     const [RoomSelected, setRoomSelected] = useState('');
@@ -56,21 +70,27 @@ export default function BookingForm({ roomDetail, rooms }) {
     const resetButtonRef = useRef(null);
     const [errorMsg, setErrorMsg] = useState('');
 
-    async function handleSubmit(e) {
+    async function handleForm(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
 
         const data = {
-            ' room_no': RoomSelected,
-            'user_token': user ? user.token : '',
+            'room_no': RoomSelected,
+            'user': user.token,
             'total_guest': TotalGuests,
             'checkin_date': checkinDateNormal,
             'checkout_date': checkoutDateNormal,
             'booking_amount': TotalCost,
             'booking_details': detail,
-            'profile': {
-                'mobile': formData.get('mobile'),
-            }
+
+            // 'room_no': '1',
+            // 'user': '1',
+            // 'total_guest': '10',
+            // 'checkin_date': '2025-10-01',
+            // 'checkout_date': '2025-10-06',
+            // 'booking_amount': '900',
+            // 'booking_details': 'Testing',
+
         };
 
         const res = await fetch('http://127.0.0.1:8000/api/booking/', {
@@ -86,9 +106,10 @@ export default function BookingForm({ roomDetail, rooms }) {
         if (res.ok) {
             setErrorMsg(false);
             resetButtonRef.current.click();
-            router.push('/checkout');
+            location.href = '/checkout'
         } else {
             let errorStr = '';
+            console.log("wada karanne na");
             for (const [key, values] of Object.entries(resData)) {
                 if (Array.isArray(values)) {
                     errorStr += values.join(' ');
@@ -97,14 +118,14 @@ export default function BookingForm({ roomDetail, rooms }) {
                 }
             }
             setErrorMsg(errorStr);
-            setSuccessMsg(false);
         }
     }
     let bookingUrl = '';
     if (typeof window !== 'undefined') {
         bookingUrl = window.location.pathname;
     }
-    if (user == null) {
+
+    if (user != null) {
         return (
             <>
                 {/* Booking Form */}
@@ -114,7 +135,7 @@ export default function BookingForm({ roomDetail, rooms }) {
                         <div className="card-header bg-dark">
                             <h5 className="mb-0 text-white">Booking Form</h5>
                         </div>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleForm}>
                             <div className="card-body">
                                 <p>
                                     <strong>Room Type:</strong> {roomDetail.title}
@@ -146,15 +167,15 @@ export default function BookingForm({ roomDetail, rooms }) {
                                     <input type="date" onChange={CheckoutDateHandler} className="form-control" value={checkoutDateNormal} />
                                 </div>
                                 <div className="mb-3">
-                                    <label className="form-label" onChange={detailHandler}>Detail</label>
-                                    <input type="text" name='booking_detail' className="form-control" onChange={detailHandler} />
+                                    <label className="form-label">Detail</label>
+                                    <input type="text" name='booking_detail' className="form-control" onChange={detailHandler} value={detail} />
                                 </div>
                                 <p>
                                     <strong><b>Total Amount:</b> {TotalCost}</strong>
                                 </p>
                                 <div className='col-auto w-100'>
                                     <button type="submit" className="btn header-button w-100 mb-2">Confirm Booking</button>
-                                    <button type="reset" ref={resetButtonRef} className="btn btn-dark w-100 mb-2">Reset</button>
+                                    <input type="reset" ref={resetButtonRef} className="btn btn-dark w-100 mb-2" value="Reset" />
                                 </div>
                             </div>
                         </form>

@@ -10,7 +10,7 @@ async function getData(uuid) {
 }
 
 async function getRooms(uuid) {
-  const res = await fetch(`http://127.0.0.1:8000/api/rooms/`+uuid+'/', { cache: 'no-store' });
+  const res = await fetch(`http://127.0.0.1:8000/api/rooms/` + uuid + '/', { cache: 'no-store' });
   const data = await res.json();
   return data;
 }

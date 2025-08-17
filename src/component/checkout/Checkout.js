@@ -1,7 +1,39 @@
+"use client";
 import Link from 'next/link';
-export default function Checkout() {
-    return (
+import { useEffect, useState } from 'react';
 
+
+
+export default function Checkout() {
+
+    const [BookingData, setBookingData] = useState({
+
+        'total_guest': 0,
+        'checkin_date': '',
+        'checkout_date': '',
+        'total': 0,
+
+
+    });
+
+    var user = localStorage.getItem('user');
+    var userData = JSON.parse(user);
+    var user_id = userData.user_id;
+
+    async function getRecentBooking() {
+        const res = await fetch(`http://127.0.0.1:8000/api/recent-booking/${user_id}`);
+        const data = await res.json();
+        setBookingData(data.results[0]);
+    }
+
+    useEffect(() => {
+
+        getRecentBooking();
+    }, []);
+
+    console.log("Booking Data: ", BookingData);
+
+    return (
         <section className="container my-5">
             <div className="row justify-content-center">
                 <div className="col-md-8 col-lg-6">
@@ -15,7 +47,7 @@ export default function Checkout() {
                                 <tbody>
                                     <tr>
                                         <td><strong>Total Guests</strong></td>
-                                        <td className="text-end">4</td>
+                                        <td className="text-end">{BookingData.total_guest}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Total Rooms</strong></td>
@@ -23,23 +55,23 @@ export default function Checkout() {
                                     </tr>
                                     <tr>
                                         <td><strong>Check-In Date</strong></td>
-                                        <td className="text-end">20/04/2024</td>
+                                        <td className="text-end">{BookingData.checkin_date}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Check-Out Date</strong></td>
-                                        <td className="text-end">30/04/2024</td>
+                                        <td className="text-end">{BookingData.checkout_date}</td>
                                     </tr>
-                                    <tr>
+                                    {/* <tr>
                                         <td><strong>Charges</strong></td>
-                                        <td className="text-end">1500X10=15000</td>
+                                        <td className="text-end">{BookingData.booking_amount}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Tax</strong></td>
                                         <td className="text-end">10%</td>
-                                    </tr>
+                                    </tr> */}
                                     <tr className="border-top">
                                         <td><strong>Total Amount</strong></td>
-                                        <td className="text-end"><strong>15000+1500=16500</strong></td>
+                                        <td className="text-end"><strong>{BookingData.booking_amount}</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -54,14 +86,13 @@ export default function Checkout() {
 
                             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                                 <button className="btn btn-outline-secondary me-md-2">Cancel</button>
-                                <Link href='/payment/success' className="btn btn-success me-md-2">Pay Now (Success)</Link>
-                                <Link href='/payment/failure' className="btn btn-danger">Pay Now (Failure)</Link>
+                                <Link href='/payment/success' className="btn btn-success me-md-2">Pay Now</Link>
+                                {/* <Link href='/payment/failure' className="btn btn-danger">Pay Now (Failure)</Link> */}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
     );
 }

@@ -1,0 +1,25 @@
+/* Gallery.module.css */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-item:hover .overlay {
+  opacity: 1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.overlay-text {
+  color: white;
+  font-size: 1.5rem;
+}

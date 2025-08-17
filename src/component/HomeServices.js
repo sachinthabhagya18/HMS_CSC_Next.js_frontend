@@ -1,42 +1,65 @@
-import Link from "next/link";
-import styles from "./HomeServices.module.css"; // Import the CSS module
+import React from 'react';
 
-export default function HomeServices() {
+const ServiceCard = ({ icon, title, description }) => {
     return (
+        <div className="container service-card">
+            <div className="icon-container">
+                <img src={icon} alt={title} className="service-icon" />
+            </div>
+            <h3 className="service-title">{title}</h3>
+            <p className="service-description">{description}</p>
+        </div>
+    );
+};
 
-        <div className="text-center">
-            <h1 className="mb-5 mt-5">Services</h1>
-            <div className={styles.servicesContainer}>
-                {/* Room Type Card */}
-                <div className={styles.serviceCard}>
-                    <img src="https://placehold.co/600x400" className={styles.cardImage} alt="Room Types" />
-                    <div className={styles.cardBody}>
-                        <h5 className={styles.cardTitle}>Room Types</h5>
-                        <p className={styles.cardText}>Discover our variety of rooms, from cozy singles to luxurious suites, all designed for your comfort.</p>
-                        <Link href="/room_type" className="btn btn-primary">More</Link>
-                    </div>
-                </div>
+const ServicesGrid = () => {
+    const services = [
+        {
+            title: "Restaurant",
+            icon: "/images/icons/balcony.png",
+            description: "Do dolore laboris commodo amet cillum qui voluptate velit occaecat adipisicing laboris est minim."
+        },
+        {
+            title: "Spa & Massage",
+            icon: "/images/icons/bed.png",
+            description: "Do dolore laboris commodo amet cillum qui voluptate velit occaecat adipisicing laboris est minim."
+        },
+        {
+            title: "Swimming Pool",
+            icon: "/images/icons/shower.png",
+            description: "Do dolore laboris commodo amet cillum qui voluptate velit occaecat adipisicing laboris est minim."
+        },
+        {
+            title: "Meeting Room",
+            icon: "/images/icons/desk.png",
+            description: "Do dolore laboris commodo amet cillum qui voluptate velit occaecat adipisicing laboris est minim."
+        },
+        {
+            title: "Fitness Center",
+            icon: "/images/icons/city.png",
+            description: "Do dolore laboris commodo amet cillum qui voluptate velit occaecat adipisicing laboris est minim."
+        },
+        {
+            title: "Laundry Service",
+            icon: "/images/icons/guests.png",
+            description: "Do dolore laboris commodo amet cillum qui voluptate velit occaecat adipisicing laboris est minim."
+        }
+    ];
 
-                {/* Events Card */}
-                <div className={styles.serviceCard}>
-                    <img src="https://placehold.co/600x400" className={styles.cardImage} alt="Events" />
-                    <div className={styles.cardBody}>
-                        <h5 className={styles.cardTitle}>Events</h5>
-                        <p className={styles.cardText}>Host your next memorable event with us. We offer versatile spaces perfect for any occasion.</p>
-                        <a href="#" className="btn btn-primary">More</a>
-                    </div>
-                </div>
-
-                {/* Online Booking Card */}
-                <div className={styles.serviceCard}>
-                    <img src="https://placehold.co/600x400" className={styles.cardImage} alt="Online Booking" />
-                    <div className={styles.cardBody}>
-                        <h5 className={styles.cardTitle}>Online Booking</h5>
-                        <p className={styles.cardText}>Book your stay effortlessly with our simple and secure online reservation system.</p>
-                        <a href="#" className="btn btn-primary">More</a>
-                    </div>
-                </div>
+    return (
+        <div className="services-container">
+            <div className="services-grid">
+                {services.map((service, index) => (
+                    <ServiceCard
+                        key={index}
+                        icon={service.icon}
+                        title={service.title}
+                        description={service.description}
+                    />
+                ))}
             </div>
         </div>
     );
-}
+};
+
+export default ServicesGrid;
